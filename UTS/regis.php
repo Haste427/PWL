@@ -71,7 +71,7 @@ if (isset($_POST['submit'])) {
             <div class="input-group">
                 <button name="submit" class="btn btn-primary px-5 mt-3 mx-auto">Register</button>
             </div>
-            <h6 class="mt-4 text-custom text-center">Already have an account? <a href="login.php">Login</a>
+            <h6 class="mt-4 text-custom text-center">Already have an account? <a href="index.php">Login</a>
         </form>
     </div>
 </body>
