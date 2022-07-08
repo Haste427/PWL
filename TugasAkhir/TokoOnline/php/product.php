@@ -10,6 +10,7 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Product</title>
+    <link rel="icon" href="../img/logo.PNG">
   </head>
   <body>
     <nav class="navbar navbar-dark bg-dark">
@@ -42,10 +43,6 @@ session_start();
             <a class="nav-link disabled">Fashion is Number One</a>
           </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
       </div>
     </nav>
     <br><br>
@@ -56,12 +53,13 @@ session_start();
         $result = mysqli_query($conn,$query);
         while($row = mysqli_fetch_array($result)){
       ?>
-        <div class="col-lg-4">
+        <div class="col-6 col-sm-6 col-md-4 col-lg-3 d-flex justify-align-items-center flex-column">
           <img class="rounded-circle" src="../img/<?php echo $row['img']; ?>" alt="Generic placeholder image" width="140" height="140">
-          <h2><?php echo $row['nama']; ?></h2>
+          <h5><?php echo $row['nama']; ?></h5>
           <br>
-          <p><?php echo $row['harga']; ?></p>
-          <p><a class="btn btn-primary" href="#" role="button">Buy »</a></p>
+          <p>$ <?php echo $row['harga']; ?></p>
+          <p><a class="btn btn-primary" href="#" role="button">Add</a></p>
+          <br>
         </div><!-- /.col-lg-4 -->
         <?php		
             }
@@ -71,7 +69,7 @@ session_start();
     <br><br><br>
     <footer class="container">
       <p class="float-right"><a href="#">Back to top</a></p>
-      <p>© 2017-2018 DKShopCompany, Inc. · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
+      <p>© 2022 DKShopCompany, Inc. · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
     </footer>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

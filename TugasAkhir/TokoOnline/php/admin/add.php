@@ -1,24 +1,16 @@
-<?php
-include 'koneksi.php';
-session_start();
-
-if(!isset($_SESSION['username'])){
-	header("Location: ../index.php");
-}
-?>
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <title>Admin</title>
-    <link rel="icon" href="../img/logo.PNG">
+    <title>Tambah Produk</title>
+    <link rel="icon" href="../../img/logo.PNG">
   </head>
   <body>
     <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="#">
-            <img src="../img/logo.PNG" alt="logo">
+            <img src="../../img/logo.PNG" alt="logo">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -26,13 +18,8 @@ if(!isset($_SESSION['username'])){
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto" style="position: center;">
             <li class="nav-item active">
-                <a class="nav-link" href="../index.php">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="../admin.php">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="product.php">Product</a>
-            </li>
-            
-
             <li class="nav-item">
                 <a class="nav-link disabled">Fashion is Number One</a>
             </li>
@@ -40,46 +27,54 @@ if(!isset($_SESSION['username'])){
         </div>
     </nav>
     <br><br><br>
-    <div id="admin">
-    <div class="container admin">
-    <div class="card">
-        <?php
-			if(isset($_SESSION['error'])) {
-		?>
-			<div class="alert alert-warning" role="alert">
-		        <?php echo $_SESSION['error']?>
-			</div>
-		<?php
-		}
-		?>
-        <div class="alert alert-success" role="alert">
-		    Berhasil login ke dalam sistem.
-		</div>
-		<div class="card-body">
-			<p>Hello <?php echo $_SESSION['username']?></p>
-            <a href="admin/add.php">Add New Product</a><br/><br/>
-            <table width='80%' border=1>
-            <tr>
-                <th>Id</th> <th>Nama</th> <th>Harga</th> <th>img</th> <th>Menu</th>
-            </tr>
-            <?php  
-            $query = "SELECT * FROM tbproduct";
-            $result = mysqli_query($conn,$query);
-            $no=1;
-            while($row = mysqli_fetch_array($result)) {         
-                echo "<tr>";
-                echo "<td>".$no."</td>";$no++;
-                echo "<td>".$row['nama']."</td>";
-                echo "<td>".$row['harga']."</td>";
-                echo "<td>".$row['img']."</td>";    
-                echo "<td><a href='admin/delete.php?nama=$row[nama]'>Delete</a></td></tr>";        
+    <div id="add">
+    <div class="container add">
+    <div class="card-body">
+    <a href="../admin.php">Balik ke Produk</a>
+	<br/><br/>
+    <div class="card-body">
+	<form action="add.php" method="post" name="form1">
+		<table width="50%" border="0">
+			<tr> 
+				<td>Nama</td>
+				<td><input type="text" name="nama"></td>
+			</tr>
+			<tr> 
+				<td>Harga</td>
+				<td><input type="text" name="harga"></td>
+			</tr>
+			<tr> 
+				<td>img</td>
+				<td><input type="file" name="file"></td>
+			</tr>
+			<tr> 
+				<td></td>
+				<td><input type="submit" name="Submit" value="Tambah"></td>
+			</tr>
+		</table>
+	</form>
+    </div>
+	<?php
+	if(isset($_POST['Submit'])) {
+		$nama = $_POST['nama'];
+		$harga = $_POST['harga'];
+		$img_file = $_FILES['img']['name'];
+        $tmp_file = $_FILES['img']['tmp_name'];
+        $path = "file/";
+        $terupload = move_uploaded_file($tmp_file, $path.$img_file);
+            if ($terupload) {
+                echo "Upload berhasil!<br/>";
+                echo "Link: <a href='".$path.$img_file."'>".$img_file."</a>";
+            } else {
+                echo "Upload Gagal!";
             }
-            ?>
-            </table>
-            <br><br><br>
-            <a href="logout.php" >Logout</a>
-        </div>
-    <br><br><br>
+		include_once("../koneksi.php");
+		$result = mysqli_query($conn, "INSERT INTO tbproduct(nama,harga,img) VALUES('$nama','$harga','$img')");
+		echo "Produk Berhasil Ditambahkan. <a href='../admin.php'>Lihat Produk</a>";
+        
+	}
+	?>
+    <br><br><br><br><br><br><br>
     <footer class="container">
         <p>© 2022 DKShopCompany, Inc. · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
     </footer>
